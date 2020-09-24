@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -43,6 +43,7 @@ class UserController extends Controller
         $data = $request->all();
         try {
             DB::beginTransaction();
+            
             $user = User::create($data);
 
             $token = JWTAuth::fromUser($user);
@@ -52,7 +53,7 @@ class UserController extends Controller
             return $this->respondWithToken($token);
         }  catch (\Exception $e) {
             DB::rollback();
-            return response()->json(['message' => 'Sorry an Error occured'], 422);
+            return response()->json(['message' => $e], 422);
         }
     }
 

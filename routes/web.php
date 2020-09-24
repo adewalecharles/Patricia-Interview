@@ -20,10 +20,10 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix'=>'api/v1'], function() use($router){
 
-    $router->get('/user', 'UserController@profile');
+    $router->get('/profile', 'UserController@profile');
     $router->get('/users', 'UserController@allUsers');
     $router->get('/single-user/{id}', 'UserController@singleUser');
-    $router->post('/login', 'UserController@create');
-    $router->post('/register', 'UserController@show');
+    $router->post('/login', 'UserController@login');
+    $router->post('/register', 'UserController@register');
 
 });
